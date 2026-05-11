@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Compose la sélection sud-africaine pour la Coupe du Monde 2026 | Afrik-Foot</title>
-<meta name="description" content="Choisis tes 26 joueurs pour la Coupe du Monde 2026 avec l'équipe d'Afrique du Sud. Sélectionne 3 gardiens, 7 à 9 défenseurs, 6 à 9 milieux et 7 à 9 attaquants, puis partage ta sélection.">
+<title>Pick South Africa's World Cup 2026 squad | Afrik-Foot</title>
+<meta name="description" content="Build and share your 26-man South Africa squad for the 2026 FIFA World Cup. Pick 3 GKs, 7-9 defenders, 6-9 midfielders and 7-9 forwards.">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
 /* ── Reset & Variables ──────────────────────────────────────────── */
@@ -164,24 +164,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div id="squad-widget">
 
   <div class="widget-header">
-    <h2>⚽ Ma sélection de l'Afrique du Sud pour la Coupe du Monde 2026</h2>
+    <h2>⚽ My South Africa squad for the 2026 World Cup</h2>
   </div>
 
   <!-- ═══ SCREEN 1: Selection ═══ -->
   <div class="screen active" id="screen-select">
     <div class="intro">
-      <div class="intro-title">⚠️ Mode d'emploi</div>
-      <p class="intro-lead">Choisis les 26 joueurs sud-africains que tu emmènerais à la Coupe du Monde 2026</p>
+      <div class="intro-title">⚠️ Instructions to pick-up your list</div>
+      <p class="intro-lead">Pick the 26 South African players you would take to the 2026 World Cup</p>
       <ol class="intro-steps">
-        <li>Tu peux choisir : 3 gardiens, 7 à 9 défenseurs, 6 à 9 milieux et 7 à 9 attaquants (total = 26).</li>
-        <li>Clique sur les onglets des positions pour naviguer entre GB, DÉF, MIL et ATT.</li>
-        <li>Valide ta liste, vérifie-la sur le terrain et partage-la.</li>
+        <li>You can choose: 3 goalkeepers, 7 to 9 defenders, 6 to 9 midfielders and 7 to 9 forwards (total must equal 26).</li>
+        <li>Click on the position tabs to switch between GK, DEF, MID and FOR.</li>
+        <li>Validate the list, see it on the pitch and you can share it.</li>
       </ol>
     </div>
 
     <!-- Progress -->
     <div class="progress">
-      <div class="progress-text"><span class="done" id="totalSelected">0</span> / <span id="totalRequired">26</span> sélectionnés</div>
+      <div class="progress-text"><span class="done" id="totalSelected">0</span> / <span id="totalRequired">26</span> selected</div>
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
 
@@ -197,20 +197,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
     <button class="validate-btn" id="btnValidate" onclick="validateSelection()" disabled>
-      <span id="btnValidateLabel">Valider ma sélection</span>
+      <span id="btnValidateLabel">Validate my squad</span>
     </button>
-    <div class="validate-hint" id="validateHint">Choisis les joueurs restants pour continuer</div>
+    <div class="validate-hint" id="validateHint">Pick the remaining players to continue</div>
 
-    <button class="reset-btn" onclick="resetAll()">↺ Réinitialiser</button>
+    <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
   </div>
 
   <!-- ═══ SCREEN 2: Pitch + Share ═══ -->
   <div class="screen" id="screen-pitch">
-    <button class="edit-btn" onclick="editSelection()">← Modifier ma sélection</button>
+    <button class="edit-btn" onclick="editSelection()">← Edit my selection</button>
 
     <div class="pitch-wrap">
       <div class="pitch-container" id="pitchContainer">
-        <div class="pitch-title">Ma sélection<br>Afrique du Sud 2026</div>
+        <div class="pitch-title">My 26-man squad<br>South Africa 2026</div>
         <div class="pitch" id="pitch">
           <div class="pitch-lines">
             <div class="halfway"></div>
@@ -224,16 +224,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
 
       <div class="share-section">
-        <button class="share-btn dl" onclick="downloadImage()">📥 Télécharger l'image</button>
+        <button class="share-btn dl" onclick="downloadImage()">📥 Download image</button>
         <div class="share-buttons">
-          <button class="share-btn x"  onclick="shareOn('x')">𝕏 Partager</button>
+          <button class="share-btn x"  onclick="shareOn('x')">𝕏 Share</button>
           <button class="share-btn fb" onclick="shareOn('facebook')">Facebook</button>
           <button class="share-btn wa" onclick="shareOn('whatsapp')">WhatsApp</button>
           <button class="share-btn ig" onclick="shareOn('instagram')">Instagram</button>
         </div>
       </div>
 
-      <button class="reset-btn" onclick="resetAll()">↺ Réinitialiser</button>
+      <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
     </div>
   </div>
 
@@ -245,28 +245,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
    ═══════════════════════════════════════════════════════════════════ */
 
 const COUNTRY = {
-  name: "Afrique du Sud",
-  htmlLang: "fr"
+  name: "South Africa",
+  htmlLang: "en"
 };
 
 const I18N = {
-  pageTitle: "Compose la sélection sud-africaine pour la Coupe du Monde 2026 | Afrik-Foot",
-  posGk: "GB",
-  posDef: "DÉF",
-  posMid: "MIL",
-  posAtt: "ATT",
-  posGkFull: "Gardiens",
-  posDefFull: "Défenseurs",
-  posMidFull: "Milieux",
-  posAttFull: "Attaquants",
-  validateBtn: "Valider ma sélection",
-  validateBtnReady: "Voir ma sélection ✓",
-  validateHintIncomplete: "Choisis les joueurs restants pour continuer",
-  shareText: "Voici ma sélection sud-africaine pour la Coupe du Monde 2026. Qu'en penses-tu ? Fais la tienne ici :",
-  instagramAlert: "Image téléchargée ! Partage-la directement sur Instagram.",
-  errorFileProto: "La capture locale est bloquée en ouverture directe (file://). Lance un serveur local (ex : python3 -m http.server) ou teste sur WordPress.",
-  errorPrefix: "Erreur : ",
-  downloadFilename: "ma-selection-afriquedusud-cdm2026.png"
+  pageTitle: "Pick South Africa's World Cup 2026 squad | Afrik-Foot",
+  posGk: "GK",
+  posDef: "DEF",
+  posMid: "MID",
+  posAtt: "FOR",
+  posGkFull: "Goalkeepers",
+  posDefFull: "Defenders",
+  posMidFull: "Midfielders",
+  posAttFull: "Forwards",
+  validateBtn: "Validate my squad",
+  validateBtnReady: "View my squad ✓",
+  validateHintIncomplete: "Pick the remaining players to continue",
+  shareText: "Here is my 26-man South Africa squad for the 2026 World Cup. What do you think? Build yours here:",
+  instagramAlert: "Image downloaded! Share it directly on Instagram.",
+  errorFileProto: "Local capture is blocked when opened directly (file://). Run a local server (e.g. python3 -m http.server) or test on WordPress.",
+  errorPrefix: "Error: ",
+  downloadFilename: "my-southafrica-wc2026-squad.png"
 };
 
 /* Allowed count per position as [min, max] — total must equal SQUAD_TOTAL */
@@ -516,10 +516,9 @@ function checkValidate() {
     const under = POSITIONS.find(p => state[p].length < SQUAD_RULES[p].min);
     if (under) {
       const r = SQUAD_RULES[under];
-      hintEl.textContent = `${POS_LABEL_FULL[under]} : minimum ${r.min} requis (actuellement ${state[under].length})`;
+      hintEl.textContent = `${POS_LABEL_FULL[under]}: pick at least ${r.min} (currently ${state[under].length})`;
     } else if (total < SQUAD_TOTAL) {
-      const remaining = SQUAD_TOTAL - total;
-      hintEl.textContent = `Encore ${remaining} joueur${remaining > 1 ? "s" : ""} à choisir`;
+      hintEl.textContent = `${SQUAD_TOTAL - total} more player${SQUAD_TOTAL - total > 1 ? "s" : ""} to pick`;
     } else {
       hintEl.textContent = I18N.validateHintIncomplete;
     }
