@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Compose la sélection algérienne pour la Coupe du Monde 2026 | Afrik-Foot</title>
+<meta name="description" content="Choisis tes 26 joueurs pour la Coupe du Monde 2026 avec l'équipe d'Algérie. Sélectionne 3 gardiens, 7 à 9 défenseurs, 6 à 9 milieux et 7 à 9 attaquants, puis partage ta sélection.">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+/* ── Reset & Variables ──────────────────────────────────────────── */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#ffffff;--card:#f5f5f5;--card-hover:#eaeaea;--card-selected:#fde8e8;
+  --accent:#e30613;--accent-dark:#b8050f;--text:#1a1a1a;--text-muted:#777;
+  --pitch-green:#2d6a30;--pitch-dark:#1e5420;--pitch-line:rgba(255,255,255,.35);
+  --pos-gk:#1e88e5;--pos-def:#1a1a1a;--pos-mid:#f9a825;--pos-att:#c62828;
+  --radius:10px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.4}
+
+/* ── Widget Container ───────────────────────────────────────────── */
+#squad-widget{width:100%;max-width:800px;margin:0 auto;padding:20px}
+
+/* ── Header ─────────────────────────────────────────────────────── */
+.widget-header{text-align:center;margin-bottom:14px}
+.widget-header h2{font-size:1.5rem;color:var(--accent);letter-spacing:.5px}
+.intro{font-size:.85rem;color:var(--text);margin-bottom:18px;line-height:1.5;max-width:600px;margin-left:auto;margin-right:auto;background:var(--card);border-left:3px solid var(--accent);border-radius:var(--radius);padding:14px 16px}
+.intro-title{font-weight:700;color:var(--accent);margin-bottom:6px;font-size:.9rem;letter-spacing:.2px}
+.intro-lead{font-weight:600;margin-bottom:8px}
+.intro-steps{padding-left:20px;margin:0}
+.intro-steps li{margin-bottom:4px}
+.intro-steps li:last-child{margin-bottom:0}
+
+/* ── Progress ───────────────────────────────────────────────────── */
+.progress{display:flex;align-items:center;gap:14px;margin-bottom:18px;font-size:1.05rem;color:var(--text-muted)}
+.progress-bar{flex:1;height:14px;background:var(--card);border-radius:7px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-dark));transition:width .3s}
+.progress-text{font-weight:700;color:var(--text);white-space:nowrap;font-size:1.05rem}
+.progress-text .done{color:var(--accent)}
+
+/* ── Screens ────────────────────────────────────────────────────── */
+.screen{display:none}
+.screen.active{display:block}
+
+/* ── Main 2-column grid (selection) ─────────────────────────────── */
+.main-grid{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start}
+
+/* ── Validate / Edit buttons ────────────────────────────────────── */
+.validate-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;padding:14px;background:#1e7e34;color:#fff;border:none;border-radius:var(--radius);font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit;letter-spacing:.3px}
+.validate-btn:not(:disabled):hover{background:#166528;transform:translateY(-1px)}
+.validate-btn:disabled{background:#ccc;color:#fff;cursor:not-allowed}
+.validate-hint{display:block;text-align:center;font-size:.72rem;color:var(--text-muted);font-style:italic;margin-top:8px}
+.validate-hint.hidden{display:none}
+
+.edit-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:transparent;color:var(--text-muted);border:1px solid #ccc;border-radius:var(--radius);font-size:.8rem;cursor:pointer;transition:all .2s;font-family:inherit;margin-bottom:14px}
+.edit-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── Pitch screen (centered) ────────────────────────────────────── */
+.pitch-wrap{max-width:380px;margin:0 auto}
+
+/* ── Vertical Tabs (col 1) ──────────────────────────────────────── */
+.tabs-col{display:flex;flex-direction:column;gap:6px}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:14px 6px;background:var(--card);border:2px solid transparent;border-radius:var(--radius);cursor:pointer;transition:all .2s;font-family:inherit;color:var(--text);text-align:center}
+.tab:hover:not(.active){background:var(--card-hover)}
+.tab .tab-label{font-size:.85rem;font-weight:700;letter-spacing:.5px}
+.tab .tab-count{font-size:.7rem;color:var(--text-muted);font-weight:600}
+.tab.active{background:var(--card-selected);border-color:var(--accent);color:var(--accent)}
+.tab.active .tab-count{color:var(--accent)}
+.tab.done{background:#d4edda;border-color:#1e7e34;color:#1e7e34}
+.tab.done .tab-count{color:#1e7e34}
+.tab[data-pos="gk"]::before{content:"";display:block;width:18px;height:4px;border-radius:2px;background:var(--pos-gk);margin-bottom:6px}
+.tab[data-pos="def"]::before{content:"";display:block;width:18px;height:4px;border-radius:2px;background:var(--pos-def);margin-bottom:6px}
+.tab[data-pos="mid"]::before{content:"";display:block;width:18px;height:4px;border-radius:2px;background:var(--pos-mid);margin-bottom:6px}
+.tab[data-pos="att"]::before{content:"";display:block;width:18px;height:4px;border-radius:2px;background:var(--pos-att);margin-bottom:6px}
+
+/* ── Player Cards Grid (col 2) ──────────────────────────────────── */
+.players-col{min-width:0}
+.player-grid{display:none;grid-template-columns:repeat(2,1fr);gap:8px}
+.player-grid.active{display:grid}
+.player-card{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid transparent;border-radius:var(--radius);padding:8px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;min-width:0}
+.player-card:hover:not(.disabled){border-color:var(--accent);background:var(--card-hover)}
+.player-card.selected{border-color:var(--accent);background:var(--card-selected)}
+.player-card.disabled{opacity:.35;pointer-events:none}
+.player-card .initials{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;color:#fff;flex-shrink:0;letter-spacing:.5px}
+.player-card .info{flex:1;min-width:0;overflow:hidden}
+.player-card .name{font-size:.78rem;font-weight:600;line-height:1.25}
+.player-card .name span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.player-card .name .first{font-weight:400;color:var(--text-muted);font-size:.7rem}
+.player-card .check{position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#fff;display:none;align-items:center;justify-content:center;font-size:.65rem;font-weight:700}
+.player-card.selected .check{display:flex}
+
+/* ── Pitch ──────────────────────────────────────────────────────── */
+.pitch-container{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.pitch-title{text-align:center;font-size:.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;line-height:1.4}
+.pitch{position:relative;width:100%;padding-bottom:175%;background:linear-gradient(180deg,var(--pitch-dark) 0%,var(--pitch-green) 22%,var(--pitch-green) 78%,var(--pitch-dark) 100%);border-radius:8px;overflow:hidden;border:2px solid var(--pitch-line)}
+
+/* Pitch lines */
+.pitch-lines{position:absolute;inset:0}
+.pitch-lines .halfway{position:absolute;top:50%;left:5%;right:5%;height:0;border-top:2px solid var(--pitch-line)}
+.pitch-lines .center-circle{position:absolute;top:50%;left:50%;width:22%;padding-bottom:22%;border-radius:50%;border:2px solid var(--pitch-line);transform:translate(-50%,-50%)}
+.pitch-lines .center-dot{position:absolute;top:50%;left:50%;width:5px;height:5px;border-radius:50%;background:var(--pitch-line);transform:translate(-50%,-50%)}
+.pitch-lines .box-top{position:absolute;top:0;left:22%;right:22%;height:14%;border:2px solid var(--pitch-line);border-top:none}
+.pitch-lines .box-bottom{position:absolute;bottom:0;left:22%;right:22%;height:14%;border:2px solid var(--pitch-line);border-bottom:none}
+
+/* Pitch position lines (rows of dots) */
+.pitch-zones{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:5% 4%}
+.pitch-zone{display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:10px 8px;min-height:0;flex:1}
+.pitch-zone.gk{flex:0 0 auto}
+.pitch-zone-label{position:absolute;left:6px;font-size:.55rem;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:1px;transform:translateY(-50%)}
+
+/* Pitch dots (small badges with initials) */
+.pitch-dot{display:flex;flex-direction:column;align-items:center;width:52px;transition:transform .2s}
+.pitch-dot .dot-circle{width:42px;height:42px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;color:#fff;letter-spacing:.5px;box-shadow:0 2px 6px rgba(0,0,0,.45)}
+.pitch-dot .dot-name{font-size:.7rem;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9);margin-top:3px;white-space:nowrap;max-width:64px;overflow:hidden;text-overflow:ellipsis}
+.pitch-dot.empty .dot-circle{border:2px dashed rgba(255,255,255,.45);background:rgba(255,255,255,.08)!important;color:rgba(255,255,255,.45)}
+.pitch-dot.empty .dot-name{color:rgba(255,255,255,.4)}
+
+/* ── Share Section ──────────────────────────────────────────────── */
+.share-section{margin-top:18px;display:flex;flex-direction:column;gap:10px}
+.share-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.share-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:11px 6px;border:none;border-radius:var(--radius);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;color:#fff;font-family:inherit}
+.share-btn:hover{opacity:.9;transform:translateY(-1px)}
+.share-btn.x{background:#000}
+.share-btn.fb{background:#1877f2}
+.share-btn.wa{background:#25d366}
+.share-btn.ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.share-btn.dl{background:var(--accent);width:100%;padding:13px;font-size:.9rem}
+
+/* ── Reset Button ───────────────────────────────────────────────── */
+.reset-btn{display:block;width:100%;margin-top:14px;padding:9px;background:transparent;color:var(--text-muted);border:1px solid #ccc;border-radius:var(--radius);font-size:.78rem;cursor:pointer;transition:all .2s;font-family:inherit}
+.reset-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media(max-width:640px){
+  #squad-widget{padding:12px}
+  .main-grid{grid-template-columns:1fr;gap:14px}
+  .tabs-col{flex-direction:row;overflow-x:auto;padding-bottom:4px}
+  .tab{flex:1;flex-direction:row;padding:8px 6px;gap:6px;min-width:80px}
+  .tab[data-pos]::before{display:none}
+  .tab .tab-label{font-size:.78rem}
+  .player-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .player-card{padding:7px;gap:7px}
+  .player-card .initials{width:36px;height:36px;font-size:.72rem}
+  .player-card .name{font-size:.72rem}
+  .widget-header h2{font-size:1.25rem}
+  .pitch-dot{width:46px}
+  .pitch-dot .dot-circle{width:38px;height:38px;font-size:.78rem}
+  .pitch-dot .dot-name{font-size:.65rem}
+  .share-buttons{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:400px){
+  #squad-widget{padding:8px}
+  .player-card{padding:6px;gap:6px}
+  .player-card .initials{width:32px;height:32px;font-size:.68rem}
+  .player-card .name{font-size:.68rem}
+  .player-card .name .first{font-size:.62rem}
+}
+</style>
+</head>
+<body>
+
+<div id="squad-widget">
+
+  <div class="widget-header">
+    <h2>⚽ Ma sélection de l'Algérie pour la Coupe du Monde 2026</h2>
+  </div>
+
+  <!-- ═══ SCREEN 1: Selection ═══ -->
+  <div class="screen active" id="screen-select">
+    <div class="intro">
+      <div class="intro-title">⚠️ Mode d'emploi</div>
+      <p class="intro-lead">Choisis les 26 joueurs algériens que tu emmènerais à la Coupe du Monde 2026</p>
+      <ol class="intro-steps">
+        <li>Tu peux choisir : 3 gardiens, 7 à 9 défenseurs, 6 à 9 milieux et 7 à 9 attaquants (total = 26).</li>
+        <li>Clique sur les onglets des positions pour naviguer entre GB, DÉF, MIL et ATT.</li>
+        <li>Valide ta liste, vérifie-la sur le terrain et partage-la.</li>
+      </ol>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress">
+      <div class="progress-text"><span class="done" id="totalSelected">0</span> / <span id="totalRequired">26</span> sélectionnés</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <!-- 2-column layout: tabs | players -->
+    <div class="main-grid">
+      <div class="tabs-col" id="tabsCol"></div>
+      <div class="players-col">
+        <div class="player-grid active" id="gridGk"></div>
+        <div class="player-grid" id="gridDef"></div>
+        <div class="player-grid" id="gridMid"></div>
+        <div class="player-grid" id="gridAtt"></div>
+      </div>
+    </div>
+
+    <button class="validate-btn" id="btnValidate" onclick="validateSelection()" disabled>
+      <span id="btnValidateLabel">Valider ma sélection</span>
+    </button>
+    <div class="validate-hint" id="validateHint">Choisis les joueurs restants pour continuer</div>
+
+    <button class="reset-btn" onclick="resetAll()">↺ Réinitialiser</button>
+  </div>
+
+  <!-- ═══ SCREEN 2: Pitch + Share ═══ -->
+  <div class="screen" id="screen-pitch">
+    <button class="edit-btn" onclick="editSelection()">← Modifier ma sélection</button>
+
+    <div class="pitch-wrap">
+      <div class="pitch-container" id="pitchContainer">
+        <div class="pitch-title">Ma sélection<br>Algérie 2026</div>
+        <div class="pitch" id="pitch">
+          <div class="pitch-lines">
+            <div class="halfway"></div>
+            <div class="center-circle"></div>
+            <div class="center-dot"></div>
+            <div class="box-top"></div>
+            <div class="box-bottom"></div>
+          </div>
+          <div class="pitch-zones" id="pitchZones"></div>
+        </div>
+      </div>
+
+      <div class="share-section">
+        <button class="share-btn dl" onclick="downloadImage()">📥 Télécharger l'image</button>
+        <div class="share-buttons">
+          <button class="share-btn x"  onclick="shareOn('x')">𝕏 Partager</button>
+          <button class="share-btn fb" onclick="shareOn('facebook')">Facebook</button>
+          <button class="share-btn wa" onclick="shareOn('whatsapp')">WhatsApp</button>
+          <button class="share-btn ig" onclick="shareOn('instagram')">Instagram</button>
+        </div>
+      </div>
+
+      <button class="reset-btn" onclick="resetAll()">↺ Réinitialiser</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   ⚙️  CONFIG — Edit only this section to customise
+   ═══════════════════════════════════════════════════════════════════ */
+
+const COUNTRY = {
+  name: "Algérie",
+  htmlLang: "fr"
+};
+
+const I18N = {
+  pageTitle: "Compose la sélection algérienne pour la Coupe du Monde 2026 | Afrik-Foot",
+  posGk: "GB",
+  posDef: "DÉF",
+  posMid: "MIL",
+  posAtt: "ATT",
+  posGkFull: "Gardiens",
+  posDefFull: "Défenseurs",
+  posMidFull: "Milieux",
+  posAttFull: "Attaquants",
+  validateBtn: "Valider ma sélection",
+  validateBtnReady: "Voir ma sélection ✓",
+  validateHintIncomplete: "Choisis les joueurs restants pour continuer",
+  shareText: "Voici ma sélection algérienne pour la Coupe du Monde 2026. Qu'en penses-tu ? Fais la tienne ici :",
+  instagramAlert: "Image téléchargée ! Partage-la directement sur Instagram.",
+  errorFileProto: "La capture locale est bloquée en ouverture directe (file://). Lance un serveur local (ex : python3 -m http.server) ou teste sur WordPress.",
+  errorPrefix: "Erreur : ",
+  downloadFilename: "ma-selection-algerie-cdm2026.png"
+};
+
+/* Allowed count per position as [min, max] — total must equal SQUAD_TOTAL */
+const SQUAD_RULES = {
+  gk:  { min: 3, max: 3 },
+  def: { min: 7, max: 9 },
+  mid: { min: 6, max: 9 },
+  att: { min: 7, max: 9 }
+};
+const SQUAD_TOTAL = 26;
+
+/* Candidats Coupe du Monde 2026 — équipe d'Algérie */
+const PLAYERS = {
+  gk: [
+    { id: 1, name: "Luca Zidane" },
+    { id: 2, name: "Anthony Mandrea" },
+    { id: 3, name: "Melvin Mastil" },
+    { id: 4, name: "Oussama Benbot" },
+    { id: 5, name: "Alexandre Oukidja" },
+    { id: 6, name: "Alexis Guendouz" },
+    { id: 7, name: "Gaya Merbah" },
+    { id: 8, name: "Kilian Belazzoug" },
+    { id: 9, name: "Farid Chaâl" }
+  ],
+  def: [
+    { id: 20, name: "Aïssa Mandi" },
+    { id: 21, name: "Ramy Bensebaïni" },
+    { id: 22, name: "Zinédine Belaïd" },
+    { id: 23, name: "Sohaib Naïr" },
+    { id: 24, name: "Mohamed Tougaï" },
+    { id: 25, name: "Ahmed Touba" },
+    { id: 26, name: "Elias Benkara" },
+    { id: 27, name: "Elyaz Zidane" },
+    { id: 28, name: "Rafik Belghali" },
+    { id: 29, name: "Samir Chergui" },
+    { id: 30, name: "Achraf Abada" },
+    { id: 31, name: "Youcef Atal" },
+    { id: 32, name: "Kevin Guitoun" },
+    { id: 33, name: "Rayan Aït-Nouri" },
+    { id: 34, name: "Jaouen Hadjam" },
+    { id: 35, name: "Mehdi Dorval" }
+  ],
+  mid: [
+    { id: 50, name: "Ibrahim Maza" },
+    { id: 51, name: "Hicham Boudaoui" },
+    { id: 52, name: "Ramiz Zerrouki" },
+    { id: 53, name: "Houssem Aouar" },
+    { id: 54, name: "Fares Chaïbi" },
+    { id: 55, name: "Yacine Titraoui" },
+    { id: 56, name: "Adem Zorgane" },
+    { id: 57, name: "Ismaël Bennacer" },
+    { id: 58, name: "Nabil Bentaleb" },
+    { id: 59, name: "Himad Abdelli" },
+    { id: 60, name: "Adil Aouchiche" },
+    { id: 61, name: "Carlo Boukhalfa" },
+    { id: 62, name: "Yacine Adli" },
+    { id: 63, name: "Ethan Mbappé" }
+  ],
+  att: [
+    { id: 80, name: "Riyad Mahrez" },
+    { id: 81, name: "Amine Gouiri" },
+    { id: 82, name: "Mohamed Amine Amoura" },
+    { id: 83, name: "Anis Hadj Moussa" },
+    { id: 84, name: "Baghdad Bounedjah" },
+    { id: 85, name: "Adil Boulbina" },
+    { id: 86, name: "Ilan Kebbal" },
+    { id: 87, name: "Rafik Guitane" },
+    { id: 88, name: "Fares Ghedjemis" },
+    { id: 89, name: "Ahmed Benbouali" },
+    { id: 90, name: "Amine Chiakha" },
+    { id: 91, name: "Moncef Bakrar" },
+    { id: 92, name: "Redouane Berkane" },
+    { id: 93, name: "Youcef Belaïli" },
+    { id: 94, name: "Islam Slimani" },
+    { id: 95, name: "Yassine Benzia" },
+    { id: 96, name: "Saïd Benrahma" }
+  ]
+};
+
+/* ═══════════════════════════════════════════════════════════════════
+   🚫 END OF CONFIG — Shared code below
+   ═══════════════════════════════════════════════════════════════════ */
+
+const POSITIONS = ["gk","def","mid","att"];
+const POS_COLOR = { gk:"var(--pos-gk)", def:"var(--pos-def)", mid:"var(--pos-mid)", att:"var(--pos-att)" };
+const POS_LABEL = { gk:I18N.posGk, def:I18N.posDef, mid:I18N.posMid, att:I18N.posAtt };
+const POS_LABEL_FULL = { gk:I18N.posGkFull, def:I18N.posDefFull, mid:I18N.posMidFull, att:I18N.posAttFull };
+
+const state = {
+  gk: [], def: [], mid: [], att: [],
+  currentTab: "gk"
+};
+
+/* ── Range helpers ───────────────────────────────────────────────── */
+function getEffectiveMax(pos) {
+  const range = SQUAD_RULES[pos];
+  let reservedForOthers = 0;
+  POSITIONS.forEach(q => {
+    if (q === pos) return;
+    reservedForOthers += Math.max(state[q].length, SQUAD_RULES[q].min);
+  });
+  return Math.min(range.max, SQUAD_TOTAL - reservedForOthers);
+}
+
+function isPositionValid(pos) {
+  const r = SQUAD_RULES[pos];
+  const n = state[pos].length;
+  return n >= r.min && n <= r.max;
+}
+
+function isSquadValid() {
+  const total = POSITIONS.reduce((s,p) => s + state[p].length, 0);
+  return total === SQUAD_TOTAL && POSITIONS.every(isPositionValid);
+}
+
+/* ── Initials helper ─────────────────────────────────────────────── */
+function getInitials(name) {
+  const parts = name.replace(/[-']/g, " ").trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function getLastName(name) {
+  const parts = name.trim().split(/\s+/);
+  return parts[parts.length - 1];
+}
+
+function getFirstName(name) {
+  const parts = name.trim().split(/\s+/);
+  parts.pop();
+  return parts.join(" ");
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════════════ */
+function init() {
+  document.documentElement.lang = COUNTRY.htmlLang;
+  document.title = I18N.pageTitle;
+  renderTabs();
+  POSITIONS.forEach(pos => renderPlayerGrid(pos));
+  renderPitch();
+  updateProgress();
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────── */
+function renderTabs() {
+  const el = document.getElementById("tabsCol");
+  el.innerHTML = POSITIONS.map(pos => {
+    const r = SQUAD_RULES[pos];
+    const count = state[pos].length;
+    const done = isPositionValid(pos);
+    const cls = pos === state.currentTab ? "active" : (done ? "done" : "");
+    const countDisplay = (r.min === r.max) ? `${count}/${r.max}` : `${count}/${r.min}-${r.max}`;
+    return `<button class="tab ${cls}" data-pos="${pos}" onclick="goToTab('${pos}')">
+      <span class="tab-label">${POS_LABEL[pos]}</span>
+      <span class="tab-count">${countDisplay}</span>
+    </button>`;
+  }).join("");
+}
+
+function goToTab(pos) {
+  state.currentTab = pos;
+  POSITIONS.forEach(p => {
+    document.getElementById("grid" + p.charAt(0).toUpperCase() + p.slice(1))
+      .classList.toggle("active", p === pos);
+  });
+  renderTabs();
+}
+
+/* ── Player Grids ────────────────────────────────────────────────── */
+function renderPlayerGrid(pos) {
+  const grid = document.getElementById("grid" + pos.charAt(0).toUpperCase() + pos.slice(1));
+  const players = PLAYERS[pos];
+  grid.innerHTML = players.map(p => {
+    const initials = getInitials(p.name);
+    const firstName = getFirstName(p.name);
+    const lastName = getLastName(p.name);
+    return `<div class="player-card" data-id="${p.id}" onclick="selectPlayer('${pos}',${p.id})">
+      <div class="initials" style="background:${POS_COLOR[pos]}">${initials}</div>
+      <div class="info"><div class="name">${firstName ? `<span class="first">${firstName}</span>` : ""}<span>${lastName}</span></div></div>
+      <div class="check">✓</div>
+    </div>`;
+  }).join("");
+  updateGridSelection(pos);
+}
+
+function selectPlayer(pos, id) {
+  const pool = PLAYERS[pos];
+  const player = pool.find(p => p.id === id);
+  if (!player) return;
+
+  const idx = state[pos].findIndex(p => p.id === id);
+
+  if (idx >= 0) {
+    state[pos].splice(idx, 1);
+  } else {
+    const effMax = getEffectiveMax(pos);
+    if (state[pos].length >= effMax) return;
+    state[pos].push(player);
+  }
+
+  // Effective max of every position depends on others — refresh them all
+  POSITIONS.forEach(p => updateGridSelection(p));
+  renderTabs();
+  renderPitch();
+  updateProgress();
+  checkValidate();
+}
+
+function updateGridSelection(pos) {
+  const grid = document.getElementById("grid" + pos.charAt(0).toUpperCase() + pos.slice(1));
+  const full = state[pos].length >= getEffectiveMax(pos);
+  grid.querySelectorAll(".player-card").forEach(card => {
+    const id = parseInt(card.dataset.id);
+    const isSelected = state[pos].some(p => p.id === id);
+    card.classList.toggle("selected", isSelected);
+    card.classList.toggle("disabled", full && !isSelected);
+  });
+}
+
+/* ── Pitch rendering ─────────────────────────────────────────────── */
+function renderPitch() {
+  const container = document.getElementById("pitchZones");
+  // 4 zones from top (ATT) to bottom (GK)
+  const order = ["att", "mid", "def", "gk"];
+  container.innerHTML = order.map(pos => renderZone(pos)).join("");
+}
+
+function renderZone(pos) {
+  const selected = state[pos];
+  const dots = selected.map(player => {
+    const initials = getInitials(player.name);
+    const lastName = getLastName(player.name);
+    return `<div class="pitch-dot" data-pos="${pos}">
+      <div class="dot-circle" style="background:${POS_COLOR[pos]}">${initials}</div>
+      <div class="dot-name">${lastName}</div>
+    </div>`;
+  });
+  return `<div class="pitch-zone ${pos}">${dots.join("")}</div>`;
+}
+
+/* ── Progress + validation ───────────────────────────────────────── */
+function updateProgress() {
+  const total = POSITIONS.reduce((sum, p) => sum + state[p].length, 0);
+  document.getElementById("totalSelected").textContent = total;
+  document.getElementById("totalRequired").textContent = SQUAD_TOTAL;
+  document.getElementById("progressFill").style.width = (total / SQUAD_TOTAL * 100) + "%";
+}
+
+function checkValidate() {
+  const ready = isSquadValid();
+  const btn = document.getElementById("btnValidate");
+  btn.disabled = !ready;
+  document.getElementById("btnValidateLabel").textContent = ready ? I18N.validateBtnReady : I18N.validateBtn;
+
+  const hintEl = document.getElementById("validateHint");
+  hintEl.classList.toggle("hidden", ready);
+  if (!ready) {
+    const total = POSITIONS.reduce((s,p) => s + state[p].length, 0);
+    const under = POSITIONS.find(p => state[p].length < SQUAD_RULES[p].min);
+    if (under) {
+      const r = SQUAD_RULES[under];
+      hintEl.textContent = `${POS_LABEL_FULL[under]} : minimum ${r.min} requis (actuellement ${state[under].length})`;
+    } else if (total < SQUAD_TOTAL) {
+      const remaining = SQUAD_TOTAL - total;
+      hintEl.textContent = `Encore ${remaining} joueur${remaining > 1 ? "s" : ""} à choisir`;
+    } else {
+      hintEl.textContent = I18N.validateHintIncomplete;
+    }
+  }
+}
+
+/* ── Screen navigation ───────────────────────────────────────────── */
+function showScreen(name) {
+  document.getElementById("screen-select").classList.toggle("active", name === "select");
+  document.getElementById("screen-pitch").classList.toggle("active", name === "pitch");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function validateSelection() {
+  if (!isSquadValid()) return;
+  showScreen("pitch");
+}
+
+function editSelection() {
+  showScreen("select");
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+function resetAll() {
+  POSITIONS.forEach(p => state[p] = []);
+  state.currentTab = "gk";
+  POSITIONS.forEach(p => updateGridSelection(p));
+  renderTabs();
+  renderPitch();
+  updateProgress();
+  checkValidate();
+  goToTab("gk");
+  showScreen("select");
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PARENT URL + IFRAME RESIZE (postMessage)
+   ═══════════════════════════════════════════════════════════════════ */
+let _parentUrl = null;
+
+function getShareUrl() {
+  if (_parentUrl) return _parentUrl;
+  try {
+    if (window.top && window.top !== window.self && window.top.location.href) {
+      return window.top.location.href;
+    }
+  } catch (e) {
+    if (document.referrer) return document.referrer;
+  }
+  return window.location.href;
+}
+
+window.addEventListener('message', (e) => {
+  if (e.data && (e.data.type === 'wc2026-url' || e.data.type === 'xilegende-url') && e.data.url) {
+    _parentUrl = e.data.url;
+  }
+});
+
+function setupAutoResize() {
+  if (window.parent === window) return;
+  const postHeight = () => {
+    const widget = document.getElementById('squad-widget');
+    const h = widget
+      ? Math.ceil(widget.getBoundingClientRect().bottom + window.scrollY)
+      : Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    window.parent.postMessage({ type: 'wc2026-resize', height: h }, '*');
+    window.parent.postMessage({ type: 'xilegende-resize', height: h }, '*');
+  };
+  postHeight();
+  window.addEventListener('resize', postHeight);
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(postHeight).observe(document.body);
+  }
+  window.parent.postMessage({ type: 'wc2026-getUrl' }, '*');
+  window.parent.postMessage({ type: 'xilegende-getUrl' }, '*');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   IMAGE GENERATION & SHARE
+   ═══════════════════════════════════════════════════════════════════ */
+async function generateImage() {
+  const pitchEl = document.getElementById("pitchContainer");
+  await new Promise(r => requestAnimationFrame(r));
+  const canvas = await html2canvas(pitchEl, {
+    backgroundColor: "#f5f5f5",
+    scale: 4,
+    useCORS: true,
+    allowTaint: true,
+    logging: false,
+    imageTimeout: 15000
+  });
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(b => {
+      if (b) resolve(b);
+      else reject(new Error("Canvas not exportable."));
+    }, "image/png");
+  });
+}
+
+async function downloadImage() {
+  try {
+    const blob = await generateImage();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = I18N.downloadFilename;
+    a.click();
+  } catch (e) {
+    console.error("html2canvas error:", e);
+    const msg = (location.protocol === "file:")
+      ? I18N.errorFileProto
+      : I18N.errorPrefix + (e.message || e);
+    alert(msg);
+  }
+}
+
+function shareOn(platform) {
+  const text = encodeURIComponent(I18N.shareText);
+  const url = encodeURIComponent(getShareUrl());
+  const urls = {
+    x: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`,
+    whatsapp: `https://wa.me/?text=${text}%20${url}`
+  };
+  if (platform === "instagram") {
+    downloadImage();
+    alert(I18N.instagramAlert);
+    return;
+  }
+  if (urls[platform]) window.open(urls[platform], "_blank", "width=600,height=400");
+}
+
+/* ── Start ── */
+init();
+setupAutoResize();
+</script>
+</body>
+</html>
