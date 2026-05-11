@@ -33,10 +33,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .intro-steps li:last-child{margin-bottom:0}
 
 /* ── Progress ───────────────────────────────────────────────────── */
-.progress{display:flex;align-items:center;gap:12px;margin-bottom:18px;font-size:.8rem;color:var(--text-muted)}
-.progress-bar{flex:1;height:8px;background:var(--card);border-radius:4px;overflow:hidden}
+.progress{display:flex;align-items:center;gap:14px;margin-bottom:18px;font-size:1.05rem;color:var(--text-muted)}
+.progress-bar{flex:1;height:14px;background:var(--card);border-radius:7px;overflow:hidden}
 .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-dark));transition:width .3s}
-.progress-text{font-weight:700;color:var(--text);white-space:nowrap}
+.progress-text{font-weight:700;color:var(--text);white-space:nowrap;font-size:1.05rem}
 .progress-text .done{color:var(--accent)}
 
 /* ── Screens ────────────────────────────────────────────────────── */
@@ -47,8 +47,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .main-grid{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start}
 
 /* ── Validate / Edit buttons ────────────────────────────────────── */
-.validate-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit;letter-spacing:.3px}
-.validate-btn:not(:disabled):hover{background:var(--accent-dark);transform:translateY(-1px)}
+.validate-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:18px;padding:14px;background:#1e7e34;color:#fff;border:none;border-radius:var(--radius);font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit;letter-spacing:.3px}
+.validate-btn:not(:disabled):hover{background:#166528;transform:translateY(-1px)}
 .validate-btn:disabled{background:#ccc;color:#fff;cursor:not-allowed}
 .validate-hint{display:block;text-align:center;font-size:.72rem;color:var(--text-muted);font-style:italic;margin-top:8px}
 .validate-hint.hidden{display:none}
