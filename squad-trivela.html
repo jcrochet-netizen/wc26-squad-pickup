@@ -281,16 +281,15 @@ const SQUAD_TOTAL = 26;
 const PLAYERS = {
   gk: [
     { id: 1, name: "Alisson" },
-    { id: 2, name: "Ederson Moraes" },
+    { id: 2, name: "Ederson Moraes", displayName: "Ederson M." },
     { id: 3, name: "Bento" },
-    { id: 4, name: "Hugo Souza" }
+    { id: 4, name: "Hugo Souza", displayName: "H.Souza" }
   ],
   def: [
     { id: 20, name: "Alex Sandro" },
     { id: 21, name: "Bremer" },
     { id: 22, name: "Danilo" },
     { id: 23, name: "Douglas Santos" },
-    { id: 24, name: "Caio Henrique" },
     { id: 25, name: "Gabriel Magalhães" },
     { id: 26, name: "Léo Pereira" },
     { id: 27, name: "Marquinhos" },
@@ -298,12 +297,12 @@ const PLAYERS = {
     { id: 29, name: "Ibañez" },
     { id: 30, name: "Alexsandro Ribeiro" },
     { id: 31, name: "Fabrício Bruno" },
-    { id: 32, name: "Vítor Reis" },
+    { id: 32, name: "Vítor Reis", displayName: "V. Reis" },
     { id: 33, name: "Vanderson" }
   ],
   mid: [
     { id: 50, name: "Andrey Santos" },
-    { id: 51, name: "Bruno Guimarães" },
+    { id: 51, name: "Bruno Guimarães", displayName: "B.Guimarães" },
     { id: 52, name: "Casemiro" },
     { id: 53, name: "Danilo Santos" },
     { id: 54, name: "Fabinho" },
@@ -313,17 +312,17 @@ const PLAYERS = {
     { id: 58, name: "Joelinton" },
     { id: 59, name: "Gerson" },
     { id: 60, name: "Ederson" },
-    { id: 61, name: "João Gomes" }
+    { id: 61, name: "João Gomes", displayName: "J. Gomes" }
   ],
   att: [
     { id: 80, name: "Endrick" },
     { id: 82, name: "Gabriel Martinelli" },
     { id: 83, name: "Igor Thiago" },
-    { id: 84, name: "João Pedro" },
-    { id: 85, name: "Luiz Henrique" },
-    { id: 86, name: "Matheus Cunha" },
+    { id: 84, name: "João Pedro", displayName: "J.Pedro" },
+    { id: 85, name: "Luiz Henrique", displayName: "L.Henrique" },
+    { id: 86, name: "Matheus Cunha", displayName: "M.Cunha" },
     { id: 87, name: "Raphinha" },
-    { id: 88, name: "Vinicius Júnior" },
+    { id: 88, name: "Vinicius Júnior", displayName: "Vinicius" },
     { id: 89, name: "Neymar" },
     { id: 90, name: "Antony" },
     { id: 91, name: "Rayan" },
@@ -489,10 +488,10 @@ function renderZone(pos) {
   const selected = state[pos];
   const dots = selected.map(player => {
     const initials = getInitials(player.name);
-    const lastName = getLastName(player.name);
+    const displayName = player.displayName || getLastName(player.name);
     return `<div class="pitch-dot" data-pos="${pos}">
       <div class="dot-circle" style="background:${POS_COLOR[pos]}">${initials}</div>
-      <div class="dot-name">${lastName}</div>
+      <div class="dot-name">${displayName}</div>
     </div>`;
   });
   return `<div class="pitch-zone ${pos}">${dots.join("")}</div>`;
